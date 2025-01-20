@@ -14,7 +14,7 @@ This role helps to install and configure Zabbix Agent2 on Windows Server (2016/2
 
 This role requires:
 - **Ansible 2.11 or higher**
-- **Windows Server** with support for Windows Containers.
+- **Windows Server**.
 
 ---
 
