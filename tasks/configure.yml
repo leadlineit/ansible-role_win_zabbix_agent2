@@ -1,0 +1,37 @@
+---
+- name: Remove default Zabbix Agent2 configuration file
+  ansible.windows.win_file:
+    path: "C:\\Program Files\\Zabbix Agent 2\\zabbix_agent2.conf"
+    state: absent
+  when: 
+    - ansible_facts.os_family == "Windows"
+  tags: config
+
+- name: Deploy Zabbix Agent2 configuration file
+  ansible.windows.win_template:
+    src: "templates/zabbix_agent2.conf.j2"
+    dest: "C:\\Program Files\\Zabbix Agent 2\\zabbix_agent2.conf"
+    backup: yes
+  notify:
+    - Restart Zabbix Agent 2 service
+  tags: config
+
+- name: Remove default firewall rule for Zabbix Agent2
+  community.windows.win_firewall_rule:
+    name: "Zabbix Agent 2 listen port"
+    state: absent
+
+- name: Add custom firewall rule for Zabbix Agent2
+  community.windows.win_firewall_rule:
+    name: "Zabbix Agent 2 Custom Rule"
+    localport: "{{ zabbix.zabbix_listenPort }}"
+    action: allow
+    direction: in
+    protocol: tcp
+    profiles:
+      - private
+      - public
+      - domain
+    state: present
+  notify:
+    - Restart Zabbix Agent 2 service

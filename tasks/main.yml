@@ -1,0 +1,12 @@
+---
+- name: Include ./install.yml
+  ansible.builtin.import_tasks: install.yml
+  tags:
+    - install_zabbix_agent2
+    - install
+
+- name: Include ./configure.yml
+  ansible.builtin.import_tasks: configure.yml
+  tags:
+    - configure_zabbix_agent2
+    - configure

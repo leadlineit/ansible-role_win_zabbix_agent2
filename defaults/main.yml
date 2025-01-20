@@ -1,0 +1,5 @@
+---
+zabbix_server: your.zabbix.server
+zabbix_server_active: your.zabbix.server
+zabbix_listenPort: 10050
+zabbix_hostname: "You Windows server"

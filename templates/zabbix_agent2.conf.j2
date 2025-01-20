@@ -1,0 +1,12 @@
+# This is a configuration file for Zabbix agent 2 (Windows)
+# To get more information about Zabbix, visit https://www.zabbix.com
+
+############ GENERAL PARAMETERS #################
+
+LogFile=C:\Program Files\Zabbix Agent 2\zabbix_agent2.log
+
+Server={{ zabbix.zabbix_server }}
+ServerActive={{ zabbix.zabbix_server_active }}
+ListenPort={{ zabbix.zabbix_listenPort }}
+Hostname={{ zabbix.zabbix_hostname }}
+

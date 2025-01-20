@@ -1,0 +1,20 @@
+galaxy_info:
+  author: Dmytro Fedorov
+  description: Install and configure Zabbix Agent 2 on windows server
+  company: leadlineit
+  namespace: leadlineit
+  role_name: win_zabbix_agent2
+  license: MIT
+  min_ansible_version: '2.11'
+  platforms:
+    - name: Windows
+      versions:
+        - '2022'
+        - '2019'
+        - '2016'
+  galaxy_tags:
+    - system
+    - windows
+    - monitoring
+    - zabbix
+    - agent

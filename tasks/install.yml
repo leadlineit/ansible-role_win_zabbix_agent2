@@ -1,0 +1,28 @@
+---
+- name: Ensure Temp directory exists
+  ansible.windows.win_shell: |
+    if (-Not (Test-Path "C:\\Temp_zbx")) {
+      New-Item -ItemType Directory -Force -Path C:\\Temp_zbx
+    }
+
+- name: Download Zabbix Agent2 MSI using TLS 1.2
+  ansible.windows.win_shell: |
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    if (-Not (Test-Path "C:\\Temp_zbx\\zabbix_agent2.msi")) {
+      Invoke-WebRequest -Uri "https://cdn.zabbix.com/zabbix/binaries/stable/7.0/7.0.8/zabbix_agent2-7.0.8-windows-amd64-openssl.msi" -OutFile "C:\\Temp_zbx\\zabbix_agent2.msi"
+    }
+  register: download_result
+  retries: 5
+  delay: 10
+  until: download_result is success
+  tags: download
+
+- name: Install Zabbix Agent2 from local MSI
+  ansible.windows.win_package:
+    path: "C:\\Temp_zbx\\zabbix_agent2.msi"
+    arguments: SERVER={{ zabbix_server }} SERVERACTIVE={{ zabbix_server_active }} LISTENPORT={{ zabbix_listenPort }} /quiet /norestart
+    state: present
+  when: download_result is success
+  notify:
+    - Restart Zabbix Agent 2 service
+  tags: install
