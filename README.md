@@ -72,9 +72,10 @@ Below is an example of how to use this role in your playbook:
 - hosts: windows
   roles:
     - role: leadlineit.win_zabbix_agent2
-      zabbix_server: "zabbix.example.com"
-      zabbix_server_active: "zabbix.example.com"
-      zabbix_listenPort: "10500"
+      zabbix:
+        zabbix_server: "zabbix.example.com"
+        zabbix_server_active: "zabbix.example.com"
+        zabbix_listenPort: "10500"
 ```
 
 ---
